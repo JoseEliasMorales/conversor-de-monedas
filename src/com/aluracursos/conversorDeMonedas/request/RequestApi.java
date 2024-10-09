@@ -76,7 +76,7 @@ public class RequestApi{
     public MonedaConvertida conversion(String monto) throws IOException, InterruptedException {
 
         String url = direccion + API_KEY + "/pair" + this.pair + monto;
-        System.out.println(url);
+
         client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))
@@ -86,7 +86,6 @@ public class RequestApi{
                 .send(request, HttpResponse.BodyHandlers.ofString());
 
         String json = response.body();
-        System.out.println(json);
         return gson.fromJson(json, MonedaConvertida.class);
     }
 }

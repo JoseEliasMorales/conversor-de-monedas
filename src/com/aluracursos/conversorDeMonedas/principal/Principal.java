@@ -62,47 +62,69 @@ public class Principal {
                    4) Real Brasileño =>> Peso Argentino
                    5) Peso Argentino =>> Peso Chileno
                    6) Peso Chileno =>> Peso Argentino
-            
+                   7) Salir
+                    
                    *************************************
                    """);
 
+                RequestApi requestApi = new RequestApi(gson);
+
+                System.out.println("Ingrese la opcion deseada: ");
                 String tipoDeCambio = teclado.nextLine();
 
-                RequestApi requestApi = new RequestApi(gson);
-                requestApi.request(Integer.parseInt(tipoDeCambio));
+                switch (tipoDeCambio){
+                    case "1":
+                    case "2":
+                    case "3":
+                    case "4":
+                    case "5":
+                    case "6":
+                        requestApi.request(Integer.parseInt(tipoDeCambio));
+                        System.out.println("Escriba el monto a convertir: ");
 
-                System.out.println("Escriba el monto a convertir: ");
+                        String montoAConvertir = teclado.nextLine();
 
-                String montoAConvertir = teclado.nextLine();
+                        Moneda monedaConvertida = new Moneda(requestApi.conversion(montoAConvertir));
 
-                Moneda monedaConvertida = new Moneda(requestApi.conversion(montoAConvertir));
+                        System.out.println("\nCambio: " +
+                                df.format(Integer.valueOf(montoAConvertir)) +
+                                " " +
+                                requestApi.getMonedaBase() +
+                                " son " +
+                                df.format(monedaConvertida.getCambio()) +
+                                " " +
+                                requestApi.getMonedaConvertida());
 
-                System.out.println("Cambio: " +
-                        df.format(Integer.valueOf(montoAConvertir)) +
-                        " " +
-                        requestApi.getMonedaBase() +
-                        " son " +
-                        df.format(monedaConvertida.getCambio()) +
-                        " " +
-                        requestApi.getMonedaConvertida());
-
-                System.out.println(""" 
-                        Desea hacer otro cambio?
+                        System.out.println(""" 
+                        \nDesea hacer otro cambio?
                         
                         1 - Si
                         2 - No
                         
                         """);
 
-                String intento = teclado.nextLine();
+                        String intento = teclado.nextLine();
 
-                if(intento.equals("1")){
-                    continue;
-                } else if (intento.equals("2")) {
-                    System.out.println("Gracias por utilizar nuestros servicios! Adios!");
-                    activo = false;
-                    break;
+                        if(intento.equals("1")){
+                            continue;
+                        } else if (intento.equals("2")) {
+                            System.out.println("Gracias por utilizar nuestros servicios! Adios!");
+                            activo = false;
+                            break;
+                        }
+                        continue;
+                    case "7":
+                        System.out.println("Gracias por utilizar nuestros servicios! Adios!");
+                        activo = false;
+                        break;
+                    default:
+                        System.out.println("Por favor, ingresa un valor valido. Intentalo nuevamente");
+                        break;
                 }
+
+
+
+
 
             }catch (InputMismatchException e){
                 System.out.println("Por favor, introduce un valor valido.");
