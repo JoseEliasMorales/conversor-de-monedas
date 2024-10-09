@@ -35,8 +35,8 @@ public class Principal {
                             2 - No, salir.
                             """);
 
-
                     String opcion = teclado.nextLine();
+
                     if(opcion.equals("1")){
                         error = false;
                         continue;
@@ -70,10 +70,21 @@ public class Principal {
 
                 RequestApi requestApi = new RequestApi(gson);
                 requestApi.request(Integer.parseInt(tipoDeCambio));
+
                 System.out.println("Escriba el monto a convertir: ");
+
                 String montoAConvertir = teclado.nextLine();
+
                 Moneda monedaConvertida = new Moneda(requestApi.conversion(montoAConvertir));
-                System.out.println("Cambio: " + df.format(Integer.valueOf(montoAConvertir)) + " " + requestApi.getMonedaBase() + " son " + df.format(monedaConvertida.getCambio()) + " " + requestApi.getMonedaConvertida());
+
+                System.out.println("Cambio: " +
+                        df.format(Integer.valueOf(montoAConvertir)) +
+                        " " +
+                        requestApi.getMonedaBase() +
+                        " son " +
+                        df.format(monedaConvertida.getCambio()) +
+                        " " +
+                        requestApi.getMonedaConvertida());
 
                 System.out.println(""" 
                         Desea hacer otro cambio?
@@ -84,6 +95,7 @@ public class Principal {
                         """);
 
                 String intento = teclado.nextLine();
+
                 if(intento.equals("1")){
                     continue;
                 } else if (intento.equals("2")) {
